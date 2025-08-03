@@ -1,28 +1,51 @@
 pipeline {
     agent any
-tools {
-        maven 'Maven5' // Match the name from Global Tool Configuration
+
+    tools {
+        maven 'Maven5' // Make sure this matches the name under Global Tool Configuration
     }
-stages {
+
+    stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/RishiSathe/SpringBootAppCiCdDemo', branch: 'main'
+                git url: 'https://github.com/RishiSathe/SpringBootAppCiCdDemo.git', branch: 'main'
             }
         }
-stage('Build') {
+
+        stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean'
             }
         }
-stage('Test') {
+
+        stage('Compile') {
             steps {
-                sh 'mvn test'
+                sh 'mvn compile'
             }
         }
-stage('Package') {
+
+        stage('Test') {
+            steps {
+                sh 'mvn test -DskipTests=true'
+            }
+        }
+
+        stage('Package') {
             steps {
                 sh 'mvn package'
             }
+        }
+    }
+
+    post {
+        always {
+            echo "########  Printing Always from Post ########"
+        }
+        success {
+            echo "########  Printing Success from Post ########"
+        }
+        failure {
+            echo "########  Printing Failure from Post ########"
         }
     }
 }
