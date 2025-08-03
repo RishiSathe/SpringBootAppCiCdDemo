@@ -6,7 +6,7 @@ tools {
 stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/yourname/yourrepo.git', branch: 'main'
+                git url: 'https://github.com/RishiSathe/SpringBootAppCiCdDemo/tree/main', branch: 'main'
             }
         }
 stage('Build') {
