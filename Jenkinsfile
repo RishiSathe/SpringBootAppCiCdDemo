@@ -1,10 +1,27 @@
 pipeline {
     agent any
-
-    stages {
+tools {
+        maven 'Maven5' // Match the name from Global Tool Configuration
+    }
+stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/RishiSathe/SpringBootAppCiCdDemo.git', branch: 'main'
+                git url: 'https://github.com/yourname/yourrepo.git', branch: 'main'
+            }
+        }
+stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+stage('Package') {
+            steps {
+                sh 'mvn package'
             }
         }
     }
